@@ -1,57 +1,3 @@
-local Players = game:GetService("Players")
-local UIS = game:GetService("UserInputService")
-local player = Players.LocalPlayer
-local currentSpeed = 16
-local currentJumpPower = 50
-local isSpeedEnabled = false
-local isJumpEnabled = false
-local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
-local LocalPlayer = Players.LocalPlayer
-local Camera = workspace.CurrentCamera
-
--- Aimbot Settings
-local AimbotEnabled = false
-local TargetPart = "Head"
-local FOV = 400
-
-local function GetClosestPlayer()
-    local ClosestPlayer = nil
-    local ShortestDistance = FOV
-
-    for _, Player in pairs(Players:GetPlayers()) do
-        if Player ~= LocalPlayer and Player.Character and Player.Character:FindFirstChild(TargetPart) then
-            local Character = Player.Character
-            local Part = Character[TargetPart]
-
-            local ScreenPoint, Visible = Camera:WorldToViewportPoint(Part.Position)
-            if Visible then
-                local Distance = (Vector2.new(ScreenPoint.X, ScreenPoint.Y) - 
-                    Vector2.new(Camera.ViewportSize.X/2, Camera.ViewportSize.Y/2)).Magnitude
-
-                if Distance < ShortestDistance then
-                    ShortestDistance = Distance
-                    ClosestPlayer = Player
-                end
-            end
-        end
-    end
-
-    return ClosestPlayer
-end
-
-RunService.RenderStepped:Connect(function()
-    if AimbotEnabled then
-        local Target = GetClosestPlayer()
-        if Target and Target.Character and Target.Character:FindFirstChild(TargetPart) then
-            Camera.CFrame = CFrame.new(Camera.CFrame.Position, Target.Character[TargetPart].Position)
-        end
-    end
-end)
-
-
-local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/Loco-CTO/UI-Library/main/VisionLibV2/source.lua'))()
-
 Library:SetDragSpeed(10)
 Library:SetTheme({
     Main = Color3.fromRGB(45, 45, 45),
@@ -62,15 +8,6 @@ Library:SetTheme({
     Textbox = Color3.fromRGB(61, 61, 61),
     NavBar = Color3.fromRGB(35, 35, 35),
     Theme = Color3.fromRGB(64, 255, 0),
-})
-
-local Window = Library:Create({
-   Name = "R RAT-Raider Hub",
-   Footer = "Made by Erwfd737",
-   ToggleKey = Enum.KeyCode.RightShift,
-   KeySystem = false,
-   Key = "fHAm6kNsYdZpxta4kZsLWSuR8S1n1Gb1rftOsSA4MetA49g1Ca",
-   MaxAttempts = 5
 })
 
 Library:Notify({

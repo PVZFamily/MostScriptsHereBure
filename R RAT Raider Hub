@@ -1,3 +1,5 @@
+print("Hello1")
+
 local Players = game:GetService("Players")
 local UIS = game:GetService("UserInputService")
 local player = Players.LocalPlayer
@@ -266,3 +268,4 @@ elseif placeId == 126509999114328 then -- 99 Night
         end,
     })
 end
+print("Hello2")

@@ -48,19 +48,3 @@ RunService.RenderStepped:Connect(function()
         end
     end
 end)
-
-local Library
-repeat
-    -- 1. Try to download and run the library script
-    local success, result = pcall(function()
-        return loadstring(game:HttpGet("https://raw.githubusercontent.com/Loco-CTO/UI-Library/main/VisionLibV2/source.lua"))()
-    end)
-    
-    -- 2. If it worked, set Library; if not, wait 1 second and retry
-    if success and result then
-        Library = result
-    else
-        warn("Vision UI Lib failed to load, retrying...")
-        task.wait(1)
-    end
-until Library ~= nil

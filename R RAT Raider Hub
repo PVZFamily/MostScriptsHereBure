@@ -1,0 +1,272 @@
+local Players = game:GetService("Players")
+local UIS = game:GetService("UserInputService")
+local player = Players.LocalPlayer
+local currentSpeed = 16
+local currentJumpPower = 50
+local isSpeedEnabled = false
+local isJumpEnabled = false
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
+local Camera = workspace.CurrentCamera
+
+-- Aimbot Settings
+local AimbotEnabled = false
+local TargetPart = "Head"
+local FOV = 400
+
+local function GetClosestPlayer()
+    local ClosestPlayer = nil
+    local ShortestDistance = FOV
+
+    for _, Player in pairs(Players:GetPlayers()) do
+        if Player ~= LocalPlayer and Player.Character and Player.Character:FindFirstChild(TargetPart) then
+            local Character = Player.Character
+            local Part = Character[TargetPart]
+
+            local ScreenPoint, Visible = Camera:WorldToViewportPoint(Part.Position)
+            if Visible then
+                local Distance = (Vector2.new(ScreenPoint.X, ScreenPoint.Y) - 
+                    Vector2.new(Camera.ViewportSize.X/2, Camera.ViewportSize.Y/2)).Magnitude
+
+                if Distance < ShortestDistance then
+                    ShortestDistance = Distance
+                    ClosestPlayer = Player
+                end
+            end
+        end
+    end
+
+    return ClosestPlayer
+end
+
+RunService.RenderStepped:Connect(function()
+    if AimbotEnabled then
+        local Target = GetClosestPlayer()
+        if Target and Target.Character and Target.Character:FindFirstChild(TargetPart) then
+            Camera.CFrame = CFrame.new(Camera.CFrame.Position, Target.Character[TargetPart].Position)
+        end
+    end
+end)
+
+
+local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/Loco-CTO/UI-Library/main/VisionLibV2/source.lua'))()
+
+Library:SetDragSpeed(10)
+Library:SetTheme({
+    Main = Color3.fromRGB(45, 45, 45),
+    Secondary = Color3.fromRGB(31, 31, 31),
+    Tertiary = Color3.fromRGB(31, 31, 31),
+    Text = Color3.fromRGB(255, 255, 255),
+    PlaceholderText = Color3.fromRGB(175, 175, 175),
+    Textbox = Color3.fromRGB(61, 61, 61),
+    NavBar = Color3.fromRGB(35, 35, 35),
+    Theme = Color3.fromRGB(64, 255, 0),
+})
+
+local Window = Library:Create({
+   Name = "R RAT-Raider Hub",
+   Footer = "Made by Erwfd737",
+   ToggleKey = Enum.KeyCode.RightShift,
+   KeySystem = false,
+   Key = "fHAm6kNsYdZpxta4kZsLWSuR8S1n1Gb1rftOsSA4MetA49g1Ca",
+   MaxAttempts = 5
+})
+
+Library:Notify({
+   Name = "R RAT-Raider Hub",
+   Text = "Thank you for using R RAT-Raider Hub!",
+   Duration = 6
+})
+
+local MainTab = Window:Tab({ Name = "Main Page", Icon = "rbxassetid://11396131982" })
+local MainSection = MainTab:Section({ Name = "Main stuff" })
+
+local function getHumanoid()
+   return player.Character and player.Character:FindFirstChildOfClass("Humanoid")
+end
+
+local function applySpeed()
+   local humanoid = getHumanoid()
+   if humanoid then humanoid.WalkSpeed = isSpeedEnabled and currentSpeed or 16 end
+end
+
+local function applyJump()
+   local humanoid = getHumanoid()
+   if humanoid then 
+      humanoid.UseJumpPower = true
+      humanoid.JumpPower = isJumpEnabled and currentJumpPower or 50 
+   end
+end
+
+player.CharacterAdded:Connect(function()
+    task.wait(0.5)
+    applySpeed()
+    applyJump()
+end)
+
+MainSection:Button({
+   Name = "ESP",
+   Callback = function()
+    loadstring(game:HttpGet('https://pastebin.com/raw/j9rzfuxT'))()
+   end,
+})
+
+MainSection:Button({
+   Name = "God mode loader",
+   Callback = function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Rawbr10/Roblox-Scripts/refs/heads/main/God%20Mode%20Script%20Universal"))()
+   end,
+})
+
+MainSection:Toggle({
+   Name = "Custom Speed Toggle",
+   Default = false,
+   Callback = function(value)
+      isSpeedEnabled = value
+      applySpeed()
+   end,
+})
+
+MainSection:SmallTextbox({
+   Name = "Custom Speed Input",
+   Default = "16",
+   Callback = function(value)
+      local num = tonumber(value)
+      if num then currentSpeed = num applySpeed() end
+   end,
+})
+
+MainSection:Toggle({
+   Name = "Custom Jump Power Toggle",
+   Default = false,
+   Callback = function(value)
+      isJumpEnabled = value
+      applyJump()
+   end,
+})
+
+MainSection:SmallTextbox({
+   Name = "Custom Jump Input",
+   Default = "50",
+   Callback = function(value)
+      local num = tonumber(value)
+      if num then currentJumpPower = num applyJump() end
+   end,
+})
+
+MainSection:Button({
+   Name = "INF jump",
+   Callback = function()
+      _G.infinjump = not _G.infinjump
+      if not _G.infJumpConn then
+          _G.infJumpConn = UIS.JumpRequest:Connect(function()
+              if _G.infinjump then
+                  local humanoid = getHumanoid()
+                  if humanoid then humanoid:ChangeState("Jumping") end
+              end
+          end)
+      end
+      Library:Notify({Text = "Infinite Jump: " .. tostring(_G.infinjump), Duration = 2})
+   end,
+})
+local ToolTab = Window:Tab({ Name = "Tool", Icon = "nil" })
+local ToolSection = ToolTab:Section({ Name = "Utilities" })
+
+local cctpEnabled = false
+ToolSection:Toggle({
+   Name = "Ctrl + Click to Teleport",
+   Default = false,
+   Callback = function(val) cctpEnabled = val end,
+})
+
+UIS.InputBegan:Connect(function(input, gp)
+   if gp or not cctpEnabled then return end
+   if input.UserInputType == Enum.UserInputType.MouseButton1 and (UIS:IsKeyDown(Enum.KeyCode.LeftControl) or UIS:IsKeyDown(Enum.KeyCode.RightControl)) then
+      if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+         player.Character.HumanoidRootPart.CFrame = CFrame.new(player:GetMouse().Hit.Position + Vector3.new(0, 3, 0))
+      end
+   end
+end)
+
+ToolSection:Button({
+   Name = "Alt Click Delete",
+   Callback = function()
+      _G.AltDeleteEnabled = not _G.AltDeleteEnabled 
+      if not _G.AltDelConn then
+          _G.AltDelConn = player:GetMouse().Button1Down:Connect(function()
+              if _G.AltDeleteEnabled and UIS:IsKeyDown(Enum.KeyCode.LeftAlt) then
+                  if player:GetMouse().Target then player:GetMouse().Target:Destroy() end
+              end
+          end)
+      end
+      Library:Notify({Text = "Alt-Delete: " .. tostring(_G.AltDeleteEnabled), Duration = 2})
+   end,
+})
+
+ToolSection:Button({
+   Name = "Limb Extender loader",
+   Callback = function() loadstring(game:HttpGet('https://raw.githubusercontent.com/AAPVdev/scripts/refs/heads/main/UI_LimbExtender.lua'))() end,
+})
+
+ToolSection:Button({
+   Name = "invisible loader",
+   Callback = function() loadstring(game:HttpGet('https://pastebin.com/raw/3Rnd9rHf'))() end,
+})
+ToolSection:Button({
+   Name = "FPS booster loader",
+   Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/hm5650/Antilag/refs/heads/main/Antilag", true))() end,
+})
+ToolSection:Button({
+   Name = "Airhub loader",
+   Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Exunys/AirHub/refs/heads/main/AirHub.lua"))() end,
+})
+ToolSection:Button({
+   Name = "Altair V2 hub loader",
+   Callback = function() loadstring(game:HttpGet("https://pastefy.app/hiwjpLFi/raw"))() end,
+})
+ToolSection:Toggle({
+    Name = "Aimbot toggle",
+    CurrentValue = false,
+    Callback = function(Value)
+        AimbotEnabled = Value
+    end
+})
+ToolSection:SmallTextbox({
+   Name = "Aimbot FOV input",
+   Default = "200",
+   Callback = function(value)
+    local FOV = value
+   end,
+})
+local placeId = game.PlaceId
+if placeId == 76558904092080 then -- The Forge
+    ToolSection:Button({
+        Name = "The Forge Gui loader",
+        Callback = function()
+            loadstring(game:HttpGet("https://haze.wtf/api/script"))()
+        end,
+    })
+elseif placeId == 155615604 then -- Prison Life
+    ToolSection:Button({
+        Name = "Prison Life Gui loader",
+        Callback = function()
+            loadstring(game:HttpGet("https://api.junkie-development.de/api/v1/luascripts/public/d2286888fadfe16b0f51282f0e755ac796147cb58edf457f09a81bb06a8509a7/download"))()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/YourRealjohn/RobloxScript/refs/heads/main/PrisonLife-Beta"))()
+        end,
+    })
+elseif placeId == 10449761463 then -- TSB
+    ToolSection:Button({
+        Name = "TSB Gui loader",
+        Callback = function()
+         loadstring(game:HttpGet("https://raw.githubusercontent.com/ATrainz/Phantasm/refs/heads/main/Games/TSB.lua"))()
+        end,
+    })
+elseif placeId == 126509999114328 then -- 99 Night
+    ToolSection:Button({
+        Name = "99 Night Gui loader",
+        Callback = function()
+         loadstring(game:HttpGet("https://pastebin.com/raw/09PNvrxb"))()
+        end,
+    })
+end

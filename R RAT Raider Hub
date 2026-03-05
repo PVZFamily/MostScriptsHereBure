@@ -9,7 +9,14 @@ Library:SetTheme({
     NavBar = Color3.fromRGB(35, 35, 35),
     Theme = Color3.fromRGB(64, 255, 0),
 })
-
+local Window = Library:Create({
+	Name = "R RAT-Raider Hub", 
+	Footer = "Made by Erwfd737",
+	ToggleKey = Enum.KeyCode.RightShift,
+	KeySystem = true, 
+	Key = "fHAm6kNsYdZpxta4kZsLWSuR8S1n1Gb1rftOsSA4MetA49g1Ca", 
+	MaxAttempts = 5, 
+})
 Library:Notify({
    Name = "R RAT-Raider Hub",
    Text = "Thank you for using R RAT-Raider Hub!",

@@ -49,6 +49,15 @@ RunService.RenderStepped:Connect(function()
     end
 end)
 --set
+local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/Loco-CTO/UI-Library/main/VisionLibV2/source.lua'))()
+local Window = Library:Create({
+	Name = "R RAT-Raider Hub", 
+	Footer = "Made by Erwfd737",
+	ToggleKey = Enum.KeyCode.RightShift,
+	KeySystem = false, 
+	Key = "fHAm6kNsYdZpxta4kZsLWSuR8S1n1Gb1rftOsSA4MetA49g1Ca", 
+	MaxAttempts = 5, 
+})
 Library:SetDragSpeed(10)
 Library:SetTheme({
     Main = Color3.fromRGB(45, 45, 45),

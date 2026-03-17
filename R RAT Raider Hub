@@ -223,6 +223,10 @@ ToolSection:Button({
    Name = "Altair V2 hub loader",
    Callback = function() loadstring(game:HttpGet("https://pastefy.app/hiwjpLFi/raw"))() end,
 })
+ToolSection:Button({
+   Name = "JailBreak Gui Loader",
+   Callback = function() loadstring(game:HttpGet(('https://raw.githubusercontent.com/xChaoticVoid/Jailbreak/main/Chaos.lua'), true))() end,
+})
 ToolSection:Toggle({
     Name = "Aimbot toggle",
     CurrentValue = false,

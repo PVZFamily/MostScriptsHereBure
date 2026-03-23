@@ -266,9 +266,9 @@ elseif placeId == 10449761463 then -- TSB
     })
 elseif placeId == 126509999114328 then -- 99 Night
     ToolSection:Button({
-        Name = "99 Night Gui loader",
+        Name = "Foxname Hub 99NITF keyless Gui loader",
         Callback = function()
-         loadstring(game:HttpGet("https://pastebin.com/raw/09PNvrxb"))()
+         loadstring(game:HttpGet("https://raw.githubusercontent.com/caomod2077/Script/refs/heads/main/FoxnameHub.lua"))()
         end,
     })
 end

@@ -1,4 +1,4 @@
-print("Hello1")
+print("Start.")
 
 local Players = game:GetService("Players")
 local UIS = game:GetService("UserInputService")
@@ -53,7 +53,7 @@ end)
 --set
 local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/Loco-CTO/UI-Library/main/VisionLibV2/source.lua'))()
 local Window = Library:Create({
-	Name = "R RAT-Raider Hub", 
+	Name = "Byfron Hub.Net", 
 	Footer = "Made by Erwfd737",
 	ToggleKey = Enum.KeyCode.RightShift,
 	KeySystem = false, 
@@ -72,8 +72,8 @@ Library:SetTheme({
     Theme = Color3.fromRGB(64, 255, 0),
 })
 Library:Notify({
-   Name = "R RAT-Raider Hub",
-   Text = "Thank you for using R RAT-Raider Hub!",
+   Name = "Byfron Hub.Net",
+   Text = "Thank you for using Byfron Hub.Net !",
    Duration = 6
 })
 
@@ -272,4 +272,4 @@ elseif placeId == 126509999114328 then -- 99 Night
         end,
     })
 end
-print("Hello2")
+print("End.")

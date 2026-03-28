@@ -227,20 +227,6 @@ ToolSection:Button({
    Name = "JailBreak Gui Loader",
    Callback = function() loadstring(game:HttpGet(('https://raw.githubusercontent.com/xChaoticVoid/Jailbreak/main/Chaos.lua'), true))() end,
 })
-ToolSection:Toggle({
-    Name = "Aimbot toggle",
-    CurrentValue = false,
-    Callback = function(Value)
-        AimbotEnabled = Value
-    end
-})
-ToolSection:SmallTextbox({
-   Name = "Aimbot FOV input",
-   Default = "200",
-   Callback = function(value)
-    local FOV = value
-   end,
-})
 local placeId = game.PlaceId
 if placeId == 76558904092080 then -- The Forge
     ToolSection:Button({
@@ -271,5 +257,20 @@ elseif placeId == 126509999114328 then -- 99 Night
          loadstring(game:HttpGet("https://raw.githubusercontent.com/caomod2077/Script/refs/heads/main/FoxnameHub.lua"))()
         end,
     })
+local AimbotTab = Window:Tab({ Name = "Aimbot (basic)", Icon = "nil" })
+AimbotSection:Toggle({
+    Name = "Aimbot toggle",
+    CurrentValue = false,
+    Callback = function(Value)
+        AimbotEnabled = Value
+    end
+})
+AimbotSection:SmallTextbox({
+   Name = "Aimbot FOV input",
+   Default = "200",
+   Callback = function(value)
+    local FOV = value
+   end,
+})
 end
 print("End.")

@@ -258,6 +258,7 @@ elseif placeId == 126509999114328 then -- 99 Night
         end,
     })
 local AimbotTab = Window:Tab({ Name = "Aimbot (basic)", Icon = "nil" })
+local MainSection = AimbotTab:Section({ Name = "Aimbot (basic)" })
 AimbotSection:Toggle({
     Name = "Aimbot toggle",
     CurrentValue = false,
